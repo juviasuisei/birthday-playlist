@@ -428,8 +428,9 @@ describe('DetailComponent', () => {
       dc.mount(container);
       dc.open(0, makeCollection(3));
 
-      const prevBtn = container.querySelector('.detail-nav-prev');
-      expect(prevBtn).toBeNull();
+      const prevBtn = container.querySelector('.detail-nav-prev') as HTMLElement;
+      expect(prevBtn).not.toBeNull();
+      expect(prevBtn.classList.contains('detail-nav--hidden')).toBe(true);
 
       dc.destroy();
     });
@@ -439,8 +440,9 @@ describe('DetailComponent', () => {
       dc.mount(container);
       dc.open(2, makeCollection(3));
 
-      const nextBtn = container.querySelector('.detail-nav-next');
-      expect(nextBtn).toBeNull();
+      const nextBtn = container.querySelector('.detail-nav-next') as HTMLElement;
+      expect(nextBtn).not.toBeNull();
+      expect(nextBtn.classList.contains('detail-nav--hidden')).toBe(true);
 
       dc.destroy();
     });

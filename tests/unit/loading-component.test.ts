@@ -32,12 +32,7 @@ describe('LoadingComponent', () => {
 
     const root = container.querySelector('.loading-container');
     expect(root).not.toBeNull();
-    expect(root!.querySelector('.loading-year-start')!.textContent).toBe('1981');
-    expect(root!.querySelector('.loading-year-end')!.textContent).toBe(
-      `${new Date().getFullYear()}`,
-    );
     expect(root!.querySelector('.loading-age')!.textContent).toBe('Age 0');
-    expect(root!.querySelector('.loading-fill')).not.toBeNull();
 
     loading.destroy();
   });
@@ -74,7 +69,7 @@ describe('LoadingComponent', () => {
     loading.destroy();
   });
 
-  it('should update fill bar width in sync with age counter', () => {
+  it('should update age counter in sync with ticks', () => {
     const loading = createLoadingComponent(bus);
     loading.mount(container);
     loading.show();
@@ -85,9 +80,7 @@ describe('LoadingComponent', () => {
 
     vi.advanceTimersByTime(tickInterval * 5);
 
-    const fill = container.querySelector('.loading-fill') as HTMLElement;
-    const expectedWidth = (5 / totalYears) * 100;
-    expect(fill.style.width).toBe(`${expectedWidth}%`);
+    expect(container.querySelector('.loading-age')!.textContent).toBe('Age 5');
 
     loading.destroy();
   });

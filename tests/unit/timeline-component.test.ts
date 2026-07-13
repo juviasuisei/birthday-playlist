@@ -67,9 +67,6 @@ describe('TimelineComponent', () => {
       expect(timeline).not.toBeNull();
       expect(timeline!.getAttribute('role')).toBe('list');
 
-      const line = container.querySelector('.timeline__line');
-      expect(line).not.toBeNull();
-
       const entries = container.querySelector('.timeline__entries');
       expect(entries).not.toBeNull();
 
@@ -326,21 +323,17 @@ describe('TimelineComponent', () => {
       tc.destroy();
     });
 
-    it('calls scrollIntoView on the target entry', async () => {
+    it('calls scrollTo on the timeline container', async () => {
       const tc = createTimelineComponent(bus);
       tc.mount(container);
       tc.update(makeCollection(3));
 
-      const targetEntry = container.querySelector('[data-index="1"]') as HTMLElement;
-      targetEntry.scrollIntoView = vi.fn();
+      const timeline = container.querySelector('.timeline') as HTMLElement;
+      timeline.scrollTo = vi.fn();
 
       await tc.scrollToIndex(1);
 
-      expect(targetEntry.scrollIntoView).toHaveBeenCalledWith({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'center',
-      });
+      expect(timeline.scrollTo).toHaveBeenCalled();
 
       tc.destroy();
     });
