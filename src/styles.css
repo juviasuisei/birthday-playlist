@@ -76,12 +76,12 @@ button {
 
 /* ----- Site Header ----- */
 .site-header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   text-align: center;
-  padding: 32px 24px 16px;
+  padding: 24px 24px 16px;
   z-index: 10;
 }
 
@@ -213,15 +213,24 @@ button {
 
 /* Vertical layout (mobile) */
 .timeline--vertical {
-  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
   overflow-x: hidden;
-  padding: 24px;
+  padding-top: calc(50vh - 70px);
+  padding-bottom: calc(50vh - 70px);
+  display: flex;
+  flex-direction: column;
 }
 
 .timeline--vertical .timeline__entries {
   flex-direction: column;
   gap: 24px;
   align-items: center;
+  width: 100%;
 }
 
 /* Timeline Entry */
@@ -321,12 +330,8 @@ button {
   width: 100%;
   background: var(--bg-modal);
   border-radius: 12px;
-  padding: clamp(16px, 3vh, 28px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  position: relative;
   height: calc(100vh - 80px);
   max-height: calc(100vh - 80px);
   overflow: hidden;
@@ -398,6 +403,32 @@ button {
 }
 
 /* Detail Header */
+.detail-top {
+  position: absolute;
+  top: clamp(16px, 3vh, 28px);
+  left: clamp(16px, 3vw, 28px);
+  right: clamp(16px, 3vw, 28px);
+  bottom: calc(50% + 70px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.detail-bottom {
+  position: absolute;
+  top: calc(50% + 70px);
+  left: clamp(16px, 3vw, 28px);
+  right: clamp(16px, 3vw, 28px);
+  bottom: clamp(16px, 3vh, 28px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 12px;
+}
+
 .detail-header {
   margin-bottom: 0;
   width: 100%;
@@ -497,13 +528,16 @@ button {
   margin-bottom: 4px;
 }
 
-/* Cover row with nav buttons on left/right */
+/* Cover row with nav buttons on left/right — pinned to center */
 .detail-cover-row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: clamp(16px, 3vw, 24px);
-  margin: clamp(8px, 1.5vh, 16px) 0;
+  z-index: 2;
 }
 
 .detail-cover-row .detail-nav-prev,
@@ -545,21 +579,22 @@ button {
   gap: 4px;
   margin-bottom: 16px;
   padding: 8px 16px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--text-primary);
   border-radius: 20px;
   background: transparent;
   color: var(--text-primary);
   font-size: 0.9rem;
-  transition: border-color 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .detail-back:hover {
-  border-color: var(--coral);
-  color: var(--coral);
+  background: #F0F0F0;
+  color: #1E2A42;
+  border-color: #F0F0F0;
 }
 
 .detail-back:focus-visible {
-  outline: 3px solid var(--coral);
+  outline: 3px solid var(--mint);
   outline-offset: 2px;
 }
 
@@ -609,6 +644,8 @@ button {
 @media (max-width: 767px) {
   .site-header {
     padding: 32px 16px 24px;
+    background: var(--bg-deep);
+    z-index: 20;
   }
 
   .site-title {
@@ -617,6 +654,30 @@ button {
 
   .site-tagline {
     font-size: 0.95rem;
+  }
+
+  .timeline__entry {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .timeline__year {
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+
+  .timeline-line {
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    right: auto;
+    width: 3px;
+    height: 100%;
+    transform: translateX(-50%);
   }
 
   .timeline__cover {
@@ -642,6 +703,21 @@ button {
     max-height: 100%;
     border-radius: 0;
     padding: 24px 20px;
+  }
+
+  .detail-content .detail-body {
+    height: calc(100vh - 100px);
+    max-height: calc(100vh - 100px);
+    border-radius: 12px;
+  }
+
+  .detail-middle {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .detail-middle .detail-artist-photo img {
+    max-height: 120px;
   }
 
   .detail-heading {

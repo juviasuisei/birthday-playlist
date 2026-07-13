@@ -147,13 +147,18 @@ export function createTimelineComponent(bus: EventBus): TimelineComponent {
       return Promise.resolve();
     }
 
-    // padding-left on the scroll container = calc(50vw - 90px)
-    // This means scrollLeft=0 puts first entry at center.
-    // To center entry N, scroll to its offsetLeft within the entries container.
-    rootEl.scrollTo({
-      left: targetEntry.offsetLeft,
-      behavior: 'smooth',
-    });
+    // Scroll to center the target entry
+    if (layoutMode === 'horizontal') {
+      rootEl.scrollTo({
+        left: targetEntry.offsetLeft,
+        behavior: 'smooth',
+      });
+    } else {
+      rootEl.scrollTo({
+        top: targetEntry.offsetTop,
+        behavior: 'smooth',
+      });
+    }
 
     return Promise.resolve();
   }

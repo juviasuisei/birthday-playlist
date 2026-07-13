@@ -150,24 +150,29 @@ export function createDetailComponent(bus: EventBus, parser: MarkdownParser): De
     return `
       ${backButton}
       <div class="detail-body">
-        <div class="detail-header">
-          <h2 class="detail-heading">${escapeHtml(heading)}</h2>
-          <div class="detail-secondary">
-            <span class="detail-album">${escapeHtml(entry.album)}</span>
-            <span class="detail-date">${escapeHtml(formattedDate)}</span>
-            ${linksSection}
+        <div class="detail-top">
+          <div class="detail-header">
+            <h2 class="detail-heading">${escapeHtml(heading)}</h2>
+            <div class="detail-secondary">
+              <span class="detail-album">${escapeHtml(entry.album)}</span>
+              <span class="detail-separator">&bull;</span>
+              <span class="detail-date">${escapeHtml(formattedDate)}</span>
+              ${linksSection}
+            </div>
           </div>
-        </div>
-        <div class="detail-middle">
-          ${artistPhotoHtml}
-          ${notesHtml}
+          <div class="detail-middle">
+            ${artistPhotoHtml}
+            ${notesHtml}
+          </div>
         </div>
         <div class="detail-cover-row">
           ${prevButton}
           ${albumCoverHtml}
           ${nextButton}
         </div>
-        ${musicVideoHtml}
+        <div class="detail-bottom">
+          ${musicVideoHtml}
+        </div>
       </div>
     `;
   }
