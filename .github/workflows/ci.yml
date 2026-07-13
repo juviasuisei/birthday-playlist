@@ -9,6 +9,8 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    env:
+      VITE_AIRTABLE_API_TOKEN: ${{ secrets.VITE_AIRTABLE_API_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
