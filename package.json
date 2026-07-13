@@ -1,15 +1,21 @@
 {
-  "name": "tmp_learning2",
+  "name": "birthday-playlist",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest --run"
   },
   "devDependencies": {
+    "@fast-check/vitest": "^0.4.1",
+    "fast-check": "^4.9.0",
+    "jsdom": "^29.1.1",
+    "msw": "^2.15.0",
     "typescript": "~6.0.2",
-    "vite": "^8.1.1"
+    "vite": "^8.1.1",
+    "vitest": "^4.1.10"
   }
 }

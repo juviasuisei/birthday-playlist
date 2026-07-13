@@ -7,14 +7,14 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
 ## Tasks
 
 - [ ] 1. Project scaffolding and tooling setup
-  - [-] 1.1 Initialize project with Vite vanilla-ts template
+  - [x] 1.1 Initialize project with Vite vanilla-ts template
     - Run `npm create vite@latest . -- --template vanilla-ts`
     - Initialize git repository
     - Configure `tsconfig.json` with strict mode, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`
     - Create `src/types.ts` with all interfaces (`AirtableRecord`, `AirtableResponse`, `SongEntry`, `SongCollection`, `AppState`, `EventMap`)
     - _Requirements: 11.1, 11.2, 11.4_
 
-  - [-] 1.2 Configure testing framework and CI
+  - [ ] 1.2 Configure testing framework and CI
     - Install Vitest, jsdom, fast-check, and MSW as dev dependencies
     - Create `vitest.config.ts` with jsdom environment
     - Create `.env.example` with `AIRTABLE_API_TOKEN=your_token_here`, `VITE_AIRTABLE_BASE_ID=your_base_id`, `VITE_AIRTABLE_TABLE_ID=your_table_id`
@@ -29,7 +29,7 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Ensure type-safe event payloads using the `EventMap` interface
     - _Requirements: (foundational infrastructure for all component communication)_
 
-  - [ ]* 2.2 Write unit tests for EventBus
+  - [ ] 2.2 Write unit tests for EventBus
     - Test subscribe/emit, unsubscribe, multiple handlers, unknown events
     - _Requirements: (foundational infrastructure)_
 
@@ -39,7 +39,7 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Enforce no more than 5 resolved `acquire()` calls within any contiguous 1-second window
     - _Requirements: 1.3_
 
-  - [ ]* 3.2 Write property test for RateLimiter
+  - [ ] 3.2 Write property test for RateLimiter
     - **Property 2: Rate Limiter Enforcement**
     - **Validates: Requirements 1.3**
 
@@ -53,11 +53,11 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Guard against empty/missing `AIRTABLE_API_TOKEN` at runtime
     - _Requirements: 1.1, 1.2, 1.3, 1.5, 1.6, 1.7_
 
-  - [ ]* 3.4 Write property test for pagination completeness
+  - [ ] 3.4 Write property test for pagination completeness
     - **Property 1: Pagination Completeness**
     - **Validates: Requirements 1.2**
 
-  - [ ]* 3.5 Write unit tests for DataService
+  - [ ] 3.5 Write unit tests for DataService
     - Test successful multi-page fetch, error handling (4xx/5xx), timeout, missing token guard, 429 retry
     - Use MSW to mock Airtable API responses
     - _Requirements: 1.1, 1.2, 1.5, 1.6, 1.7_
@@ -68,7 +68,7 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Sort by `releaseDate` ascending; entries with null `releaseDate` go to end
     - _Requirements: 1.4_
 
-  - [ ]* 4.2 Write property test for sort order invariant
+  - [ ] 4.2 Write property test for sort order invariant
     - **Property 3: Sort Order Invariant**
     - **Validates: Requirements 1.4**
 
@@ -80,15 +80,15 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Render unsupported syntax as plain text in `<p>` element
     - _Requirements: 12.1, 12.2, 12.5, 12.6, 7.1, 7.3_
 
-  - [ ]* 4.4 Write property test for empty input produces empty output
+  - [ ] 4.4 Write property test for empty input produces empty output
     - **Property 8: Empty Input Produces Empty Output**
     - **Validates: Requirements 7.2, 12.5**
 
-  - [ ]* 4.5 Write property test for markdown sanitization
+  - [ ] 4.5 Write property test for markdown sanitization
     - **Property 9: Markdown Sanitization**
     - **Validates: Requirements 7.3**
 
-  - [ ]* 4.6 Write property test for unsupported markdown fallback
+  - [ ] 4.6 Write property test for unsupported markdown fallback
     - **Property 11: Unsupported Markdown Fallback**
     - **Validates: Requirements 12.6**
 
@@ -97,7 +97,7 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Convert `MdNode[]` AST back to markdown string
     - _Requirements: 12.3_
 
-  - [ ]* 4.8 Write property test for markdown round-trip
+  - [ ] 4.8 Write property test for markdown round-trip
     - **Property 10: Markdown Round-Trip**
     - **Validates: Requirements 12.3, 12.4**
 
@@ -125,15 +125,15 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Emit `entry:select` on click/Enter/Space; subscribe to `data:loaded`, `layout:changed`
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 5.1, 5.2, 5.3, 5.4, 5.5, 10.1_
 
-  - [ ]* 6.3 Write property test for timeline rendering completeness
+  - [ ] 6.3 Write property test for timeline rendering completeness
     - **Property 4: Timeline Rendering Completeness**
     - **Validates: Requirements 2.1, 2.2**
 
-  - [ ]* 6.4 Write property test for tab order matches chronological order
+  - [ ] 6.4 Write property test for tab order matches chronological order
     - **Property 13: Tab Order Matches Chronological Order**
     - **Validates: Requirements 10.1**
 
-  - [ ]* 6.5 Write property test for album cover size invariants
+  - [ ] 6.5 Write property test for album cover size invariants
     - **Property 14: Album Cover Size Invariants**
     - **Validates: Requirements 5.3, 5.5**
 
@@ -151,15 +151,15 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Handle browser back button on mobile
     - _Requirements: 3.1–3.16, 4.1–4.8, 6.1–6.6, 7.1–7.4, 9.1–9.6, 10.2–10.7_
 
-  - [ ]* 6.7 Write property test for detail heading format
+  - [ ] 6.7 Write property test for detail heading format
     - **Property 5: Detail Heading Format**
     - **Validates: Requirements 3.3, 3.4**
 
-  - [ ]* 6.8 Write property test for streaming icon conditional rendering
+  - [ ] 6.8 Write property test for streaming icon conditional rendering
     - **Property 6: Streaming Icon Conditional Rendering**
     - **Validates: Requirements 3.5, 3.7, 6.1, 6.2, 6.4, 6.5**
 
-  - [ ]* 6.9 Write property test for external link safety
+  - [ ] 6.9 Write property test for external link safety
     - **Property 7: External Link Safety**
     - **Validates: Requirements 6.3, 6.6, 7.4**
 
@@ -178,7 +178,7 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Emit `nav:transition:start` and `nav:transition:end` events
     - _Requirements: 3.15, 3.16, 4.6, 9.1–9.7_
 
-  - [ ]* 7.2 Write property test for navigation transition guard
+  - [ ] 7.2 Write property test for navigation transition guard
     - **Property 12: Navigation Transition Guard**
     - **Validates: Requirements 9.7**
 
@@ -199,7 +199,7 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
     - Create `src/styles.css` with timeline layout styles (horizontal/vertical), detail modal/fullscreen styles, animation classes (fade-out, slide, fade-in), responsive breakpoint (768px), loading indicator, and focus indicator styles
     - _Requirements: 2.3, 2.4, 2.5, 3.1, 3.16, 4.1, 5.1, 5.2, 5.3, 5.4, 5.5, 8.1, 10.1_
 
-  - [ ]* 9.3 Write integration tests
+  - [ ] 9.3 Write integration tests
     - Test full data fetch → render pipeline with MSW mocked Airtable responses
     - Test navigation flow: click entry → view detail → navigate next → close
     - Test responsive layout switch during active detail view
@@ -211,7 +211,7 @@ This plan implements "Jeremiah's Birthday Playlist" — a single-page web app th
 
 ## Notes
 
-- Tasks marked with `*` are optional and can be skipped for faster MVP
+- All tasks are required
 - Each task references specific requirements for traceability
 - Checkpoints ensure incremental validation
 - Property tests validate universal correctness properties from the design document
