@@ -18,7 +18,7 @@ import type { EventBus } from '../../src/event-bus';
 /** Generate a valid ISO date string between 1981 and 2024 */
 const releaseDateArb: fc.Arbitrary<string> = fc
   .integer({ min: new Date('1981-01-01').getTime(), max: new Date('2024-12-31').getTime() })
-  .map((ts) => new Date(ts).toISOString().split('T')[0]);
+  .map((ts) => new Date(ts).toISOString().split('T')[0]!);
 
 /** Arbitrary for generating a SongEntry */
 const songEntryArb: fc.Arbitrary<SongEntry> = fc.record({

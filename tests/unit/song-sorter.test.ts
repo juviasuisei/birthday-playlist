@@ -44,9 +44,9 @@ describe('sortSongs', () => {
     ];
 
     const sorted = sortSongs(entries);
-    expect(sorted[0].id).toBe('dated');
-    expect(sorted[1].releaseDate).toBeNull();
-    expect(sorted[2].releaseDate).toBeNull();
+    expect(sorted[0]!.id).toBe('dated');
+    expect(sorted[1]!.releaseDate).toBeNull();
+    expect(sorted[2]!.releaseDate).toBeNull();
   });
 
   it('does not mutate the original array', () => {

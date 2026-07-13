@@ -57,22 +57,22 @@ describe('Property 3: Sort Order Invariant', () => {
       if (firstNullIndex === -1) {
         // All entries have non-null dates — check ascending order
         for (let i = 1; i < sorted.length; i++) {
-          expect(sorted[i].releaseDate! >= sorted[i - 1].releaseDate!).toBe(true);
+          expect(sorted[i]!.releaseDate! >= sorted[i - 1]!.releaseDate!).toBe(true);
         }
       } else {
         // (a) All entries after firstNullIndex must also be null
         for (let i = firstNullIndex; i < sorted.length; i++) {
-          expect(sorted[i].releaseDate).toBeNull();
+          expect(sorted[i]!.releaseDate).toBeNull();
         }
 
         // (a) All entries before firstNullIndex must be non-null
         for (let i = 0; i < firstNullIndex; i++) {
-          expect(sorted[i].releaseDate).not.toBeNull();
+          expect(sorted[i]!.releaseDate).not.toBeNull();
         }
 
         // (b) Non-null dated entries are in ascending chronological order
         for (let i = 1; i < firstNullIndex; i++) {
-          expect(sorted[i].releaseDate! >= sorted[i - 1].releaseDate!).toBe(true);
+          expect(sorted[i]!.releaseDate! >= sorted[i - 1]!.releaseDate!).toBe(true);
         }
       }
     }

@@ -24,7 +24,7 @@ const songEntryArb: fc.Arbitrary<SongEntry> = fc.record({
       .map((dayOffset) => {
         const base = new Date('1981-01-01');
         base.setDate(base.getDate() + dayOffset);
-        return base.toISOString().split('T')[0];
+        return base.toISOString().split('T')[0]!;
       }),
     { nil: null }
   ),

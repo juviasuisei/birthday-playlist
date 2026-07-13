@@ -69,7 +69,7 @@ describe('Property 1: Pagination Completeness', () => {
       pages.push({
         records,
         // Last page has no offset; earlier pages have an offset token
-        offset: p < numPages - 1 ? `offset_page_${p + 1}` : undefined,
+        ...(p < numPages - 1 ? { offset: `offset_page_${p + 1}` } : {}),
       });
     }
     return pages;
@@ -84,7 +84,7 @@ describe('Property 1: Pagination Completeness', () => {
       let fetchCallCount = 0;
 
       // Mock global fetch to return pages in sequence
-      const mockFetch = vi.fn(async (url: string | URL | Request) => {
+      const mockFetch = vi.fn(async (_url: string | URL | Request) => {
         const pageIndex = fetchCallCount;
         fetchCallCount++;
 

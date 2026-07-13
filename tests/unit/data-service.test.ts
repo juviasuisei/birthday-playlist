@@ -31,7 +31,7 @@ function makeAirtableResponse(
     createdTime: '2024-01-01T00:00:00.000Z',
   }));
 
-  return { records, offset };
+  return { records, ...(offset ? { offset } : {}) } as AirtableResponse;
 }
 
 describe('DataService', () => {
@@ -76,7 +76,7 @@ describe('DataService', () => {
       expect(result.entries).toHaveLength(5);
       expect(fetchMock).toHaveBeenCalledTimes(2);
       // Second call should include offset
-      expect(fetchMock.mock.calls[1][0]).toContain('offset_page2');
+      expect(fetchMock.mock.calls[1]![0]).toContain('offset_page2');
     });
 
     it('stops at maxPages even if offset is still present', async () => {

@@ -76,8 +76,8 @@ describe('Property 7: External Link Safety', () => {
 
       const collection: SongCollection = {
         entries: [entry],
-        startYear: entry.year,
-        endYear: entry.year,
+        startYear: entry.year ?? 1981,
+        endYear: entry.year ?? 1981,
       };
 
       detail.open(0, collection);

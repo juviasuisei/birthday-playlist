@@ -73,7 +73,6 @@ describe('Property 4: Timeline Rendering Completeness', () => {
       timeline.update(collection);
 
       const entryElements = container.querySelectorAll('.timeline__entry');
-      const yearElements = container.querySelectorAll('.timeline__year');
 
       // 1. Number of .timeline__entry elements equals collection.entries.length
       expect(entryElements.length).toBe(collection.entries.length);
@@ -82,8 +81,8 @@ describe('Property 4: Timeline Rendering Completeness', () => {
       entryElements.forEach((entryEl, i) => {
         const yearEl = entryEl.querySelector('.timeline__year');
         expect(yearEl).not.toBeNull();
-        const expectedYear = collection.entries[i].year != null
-          ? String(collection.entries[i].year)
+        const expectedYear = collection.entries[i]!.year != null
+          ? String(collection.entries[i]!.year)
           : '';
         expect(yearEl!.textContent).toBe(expectedYear);
       });

@@ -37,7 +37,7 @@ function makeAirtableResponse(count: number, offset?: string): AirtableResponse 
     createdTime: '2024-01-01T00:00:00.000Z',
   }));
 
-  return { records, offset };
+  return { records, ...(offset ? { offset } : {}) } as AirtableResponse;
 }
 
 describe('Integration: Full App Pipeline', () => {

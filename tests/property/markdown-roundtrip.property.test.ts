@@ -57,11 +57,6 @@ const textNodeArb: fc.Arbitrary<MdInline> = safeTextArb.map(
 );
 
 /**
- * Generate inline nodes at depth 0 (leaf level) — only text nodes.
- */
-const leafInlineArb: fc.Arbitrary<MdInline> = textNodeArb;
-
-/**
  * Generate inline nodes at depth 1 — bold, italic, or link wrapping text-only children.
  * These avoid ambiguous nesting issues:
  * - Bold contains only text children (no nested italic that would create ***)

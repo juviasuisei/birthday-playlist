@@ -23,11 +23,6 @@ const parser = createMarkdownParser();
  */
 const safeChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ,.!?;:\'"(){}+=@$%^&~`/<>';
 
-const safePunctuation = fc.constantFrom(
-  ',', '.', '!', '?', ';', ':', "'", '"', '(', ')', '{', '}',
-  '+', '=', '@', '$', '%', '^', '&', '~', '`', '/', '<', '>'
-);
-
 /**
  * Arbitrary that generates strings containing only characters that
  * won't trigger any markdown syntax. We build strings from safe characters
