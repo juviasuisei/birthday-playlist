@@ -1,0 +1,589 @@
+/* ============================================
+   Jeremiah's Birthday Playlist — Styles
+   ============================================ */
+
+/* ----- Reset / Base ----- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #1a1a2e;
+  color: #eaeaea;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: #e94560;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ----- Site Header ----- */
+.site-header {
+  text-align: center;
+  padding: 48px 24px 32px;
+}
+
+.site-title {
+  margin: 0 0 8px;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #ffffff;
+}
+
+.site-tagline {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #aaa;
+  font-style: italic;
+}
+
+/* ----- Loading Component ----- */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 24px;
+}
+
+.loading-timeline {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.loading-year-start,
+.loading-year-end {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+.loading-track {
+  flex: 1;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-fill {
+  height: 100%;
+  background: #e94560;
+  border-radius: 3px;
+  width: 0%;
+  transition: width 80ms linear;
+}
+
+.loading-age {
+  margin-top: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #e94560;
+  text-align: center;
+}
+
+/* ----- Timeline ----- */
+.timeline {
+  position: relative;
+  padding: 24px;
+}
+
+.timeline__line {
+  position: absolute;
+  background: #444;
+  border-radius: 2px;
+}
+
+.timeline__entries {
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+/* Horizontal layout (desktop) */
+.timeline--horizontal {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 24px 48px;
+}
+
+.timeline--horizontal .timeline__line {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform: translateY(-50%);
+}
+
+.timeline--horizontal .timeline__entries {
+  flex-direction: row;
+  gap: 24px;
+  align-items: center;
+}
+
+/* Vertical layout (mobile) */
+.timeline--vertical {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px;
+}
+
+.timeline--vertical .timeline__line {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  transform: translateX(-50%);
+}
+
+.timeline--vertical .timeline__entries {
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+/* Timeline Entry */
+.timeline__entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.timeline__entry:hover {
+  transform: scale(1.05);
+}
+
+.timeline__entry:focus-visible {
+  outline: 3px solid #e94560;
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+/* Album Cover */
+.timeline__cover {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.2s ease;
+}
+
+.timeline__entry:hover .timeline__cover {
+  box-shadow: 0 6px 20px rgba(233, 69, 96, 0.3);
+}
+
+/* Cover Placeholder */
+.timeline__cover-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2a2a4a;
+  border-radius: 8px;
+  color: #aaa;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+/* Year Label */
+.timeline__year {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #aaa;
+  text-align: center;
+}
+
+/* ----- Detail Overlay ----- */
+.detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.detail-overlay--fullscreen {
+  background: #1a1a2e;
+  padding: 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Detail Content */
+.detail-content {
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #16213e;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transition: opacity 200ms ease-out;
+  opacity: 1;
+}
+
+.detail-content--fading-out {
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+
+.detail-content--fading-in {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}
+
+.detail-content--visible {
+  opacity: 1;
+}
+
+.detail-overlay--fullscreen .detail-content {
+  max-width: 100%;
+  max-height: 100%;
+  height: 100%;
+  border-radius: 0;
+  padding: 24px 20px;
+  background: #1a1a2e;
+  box-shadow: none;
+}
+
+/* Detail Header */
+.detail-header {
+  margin-bottom: 24px;
+}
+
+.detail-heading {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.detail-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+/* Streaming Links */
+.detail-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.detail-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #e94560;
+  border-radius: 50%;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.detail-links a:hover {
+  background: rgba(233, 69, 96, 0.15);
+  transform: scale(1.1);
+  text-decoration: none;
+}
+
+.detail-links a svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Artist Photo */
+.detail-artist-photo {
+  margin: 20px 0;
+}
+
+.detail-artist-photo img {
+  max-height: 200px;
+  width: auto;
+  border-radius: 8px;
+}
+
+/* Notes / Thoughts */
+.detail-notes {
+  margin: 20px 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #ddd;
+}
+
+.detail-notes p {
+  margin: 0 0 12px;
+}
+
+.detail-notes a {
+  color: #e94560;
+}
+
+.detail-notes h1,
+.detail-notes h2,
+.detail-notes h3,
+.detail-notes h4,
+.detail-notes h5,
+.detail-notes h6 {
+  color: #ffffff;
+  margin: 16px 0 8px;
+}
+
+.detail-notes ul,
+.detail-notes ol {
+  padding-left: 24px;
+  margin: 8px 0;
+}
+
+.detail-notes li {
+  margin-bottom: 4px;
+}
+
+/* Navigation Controls */
+.detail-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #333;
+}
+
+.detail-nav button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #444;
+  border-radius: 50%;
+  background: transparent;
+  color: #eaeaea;
+  font-size: 1.2rem;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.detail-nav button:hover {
+  border-color: #e94560;
+  background: rgba(233, 69, 96, 0.1);
+  color: #e94560;
+}
+
+.detail-nav button:focus-visible {
+  outline: 3px solid #e94560;
+  outline-offset: 2px;
+}
+
+/* Back Button (mobile) */
+.detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  border: 1px solid #444;
+  border-radius: 20px;
+  background: transparent;
+  color: #eaeaea;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.detail-back:hover {
+  border-color: #e94560;
+  color: #e94560;
+}
+
+.detail-back:focus-visible {
+  outline: 3px solid #e94560;
+  outline-offset: 2px;
+}
+
+/* ----- Error Component ----- */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.error-message {
+  font-size: 1.1rem;
+  color: #ddd;
+  margin: 0 0 24px;
+  max-width: 400px;
+}
+
+.error-retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  border: 2px solid #444;
+  border-radius: 24px;
+  background: transparent;
+  color: #eaeaea;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.error-retry:hover {
+  border-color: #e94560;
+  background: rgba(233, 69, 96, 0.1);
+  color: #e94560;
+}
+
+.error-retry:focus-visible {
+  outline: 3px solid #e94560;
+  outline-offset: 2px;
+}
+
+/* ----- Responsive (mobile < 768px) ----- */
+@media (max-width: 767px) {
+  .site-header {
+    padding: 32px 16px 24px;
+  }
+
+  .site-title {
+    font-size: 1.6rem;
+  }
+
+  .site-tagline {
+    font-size: 0.95rem;
+  }
+
+  .timeline__cover {
+    width: 140px;
+    height: 140px;
+  }
+
+  .timeline__cover-placeholder {
+    width: 140px !important;
+    height: 140px !important;
+  }
+
+  .detail-overlay {
+    padding: 0;
+  }
+
+  .detail-overlay:not(.detail-overlay--fullscreen) {
+    align-items: flex-start;
+  }
+
+  .detail-content {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    padding: 24px 20px;
+  }
+
+  .detail-heading {
+    font-size: 1.2rem;
+  }
+}
+
+/* ----- Desktop covers sizing (768px+) ----- */
+@media (min-width: 768px) {
+  .timeline__cover {
+    width: 180px;
+    height: 180px;
+  }
+
+  .timeline__cover-placeholder {
+    width: 180px !important;
+    height: 180px !important;
+  }
+}
+
+/* ----- Scrollbar Styling ----- */
+.timeline--horizontal::-webkit-scrollbar {
+  height: 8px;
+}
+
+.timeline--horizontal::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 4px;
+}
+
+.timeline--horizontal::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+.timeline--horizontal::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.timeline--vertical::-webkit-scrollbar {
+  width: 8px;
+}
+
+.timeline--vertical::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 4px;
+}
+
+.timeline--vertical::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+.timeline--vertical::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

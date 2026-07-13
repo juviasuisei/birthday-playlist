@@ -1,60 +1,68 @@
-import './style.css'
-import typescriptLogo from './assets/typescript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.ts'
+import './styles.css';
+import { createEventBus } from './event-bus';
+import { createDataService } from './data/data-service';
+import { createTimelineComponent } from './renderer/timeline-component';
+import { createDetailComponent } from './renderer/detail-component';
+import { createLoadingComponent } from './renderer/loading-component';
+import { createErrorComponent } from './renderer/error-component';
+import { createMarkdownParser } from './engine/markdown-parser';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${typescriptLogo}" class="framework" alt="TypeScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.ts</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+const BREAKPOINT = 768;
 
-<div class="ticks"></div>
+const bus = createEventBus();
+const parser = createMarkdownParser();
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://www.typescriptlang.org" target="_blank">
-          <img class="button-icon" src="${typescriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+const appEl = document.querySelector<HTMLElement>('#app')!;
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+// Mount components
+const loading = createLoadingComponent(bus);
+loading.mount(appEl);
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const error = createErrorComponent(bus);
+error.mount(appEl);
+
+const timeline = createTimelineComponent(bus);
+timeline.mount(appEl);
+
+const detail = createDetailComponent(bus, parser);
+detail.mount(appEl);
+
+// Responsive layout detection
+function detectLayout(): 'horizontal' | 'vertical' {
+  return window.innerWidth >= BREAKPOINT ? 'horizontal' : 'vertical';
+}
+
+let currentLayout = detectLayout();
+
+window.addEventListener('resize', () => {
+  const newLayout = detectLayout();
+  if (newLayout !== currentLayout) {
+    currentLayout = newLayout;
+    bus.emit('layout:changed', { mode: currentLayout });
+  }
+});
+
+// Fetch data
+const token = import.meta.env.VITE_AIRTABLE_API_TOKEN || '';
+const baseId = import.meta.env.VITE_AIRTABLE_BASE_ID || 'appjZ7QZY0mRUJWrp';
+const tableId = import.meta.env.VITE_AIRTABLE_TABLE_ID || 'tbl2h7NudXhGkHY23';
+
+if (!token) {
+  bus.emit('data:error', { message: 'Configuration error. Data cannot be loaded.' });
+} else {
+  const dataService = createDataService(
+    {
+      baseId,
+      tableId,
+      token,
+      maxPages: 50,
+      timeoutMs: 30000,
+      rateLimit: 5,
+    },
+    bus
+  );
+
+  dataService.fetchAll().catch(() => {
+    // Error is already emitted by DataService via the EventBus
+  });
+}
