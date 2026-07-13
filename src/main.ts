@@ -27,6 +27,30 @@ timeline.mount(appEl);
 const detail = createDetailComponent(bus, parser);
 detail.mount(appEl);
 
+// Show the fixed timeline line only after data loads
+const timelineLineEl = document.querySelector('.timeline-line');
+bus.on('data:loaded', () => {
+  timelineLineEl?.classList.add('timeline-line--visible');
+});
+
+// Track current selection and scroll timeline on navigation
+let currentIndex = 0;
+
+bus.on('entry:select', (payload) => {
+  currentIndex = payload.index;
+  timeline.scrollToIndex(payload.index);
+});
+
+bus.on('nav:next', () => {
+  currentIndex++;
+  timeline.scrollToIndex(currentIndex);
+});
+
+bus.on('nav:prev', () => {
+  currentIndex--;
+  timeline.scrollToIndex(currentIndex);
+});
+
 // Responsive layout detection
 function detectLayout(): 'horizontal' | 'vertical' {
   return window.innerWidth >= BREAKPOINT ? 'horizontal' : 'vertical';

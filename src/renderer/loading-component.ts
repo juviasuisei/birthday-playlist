@@ -13,7 +13,6 @@ const ANIMATION_DURATION_MS = 3500; // ~3.5 seconds for one full loop
 export function createLoadingComponent(bus: EventBus): LoadingComponent {
   let container: HTMLElement | null = null;
   let rootEl: HTMLElement | null = null;
-  let fillEl: HTMLElement | null = null;
   let ageEl: HTMLElement | null = null;
   let animationTimer: ReturnType<typeof setInterval> | null = null;
   let showTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -31,16 +30,7 @@ export function createLoadingComponent(bus: EventBus): LoadingComponent {
     el.setAttribute('role', 'status');
     el.setAttribute('aria-label', 'Loading song data');
 
-    el.innerHTML = `
-      <div class="loading-timeline">
-        <span class="loading-year-start">${START_YEAR}</span>
-        <div class="loading-track">
-          <div class="loading-fill"></div>
-        </div>
-        <span class="loading-year-end">${currentYear}</span>
-      </div>
-      <div class="loading-age">Age 0</div>
-    `;
+    el.innerHTML = `<div class="loading-age">Age 0</div>`;
 
     return el;
   }
@@ -49,9 +39,6 @@ export function createLoadingComponent(bus: EventBus): LoadingComponent {
     stopAnimation();
     currentAge = 0;
 
-    if (fillEl) {
-      fillEl.style.width = '0%';
-    }
     if (ageEl) {
       ageEl.textContent = 'Age 0';
     }
@@ -60,21 +47,9 @@ export function createLoadingComponent(bus: EventBus): LoadingComponent {
       currentAge++;
 
       if (currentAge > totalYears) {
-        // Loop: reset and start over
         currentAge = 0;
-        if (fillEl) {
-          fillEl.style.transition = 'none';
-          fillEl.style.width = '0%';
-          // Force reflow to apply transition reset
-          fillEl.offsetWidth;
-          fillEl.style.transition = '';
-        }
       }
 
-      const progress = (currentAge / totalYears) * 100;
-      if (fillEl) {
-        fillEl.style.width = `${progress}%`;
-      }
       if (ageEl) {
         ageEl.textContent = `Age ${currentAge}`;
       }
@@ -110,7 +85,6 @@ export function createLoadingComponent(bus: EventBus): LoadingComponent {
     isVisible = true;
 
     container.appendChild(rootEl);
-    fillEl = rootEl.querySelector('.loading-fill');
     ageEl = rootEl.querySelector('.loading-age');
 
     startAnimation();
@@ -150,7 +124,6 @@ export function createLoadingComponent(bus: EventBus): LoadingComponent {
 
     container = null;
     rootEl = null;
-    fillEl = null;
     ageEl = null;
   }
 

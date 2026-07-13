@@ -11,9 +11,9 @@ export interface DetailComponent {
 
 const BREAKPOINT = 768;
 
-const APPLE_MUSIC_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M23.994 6.124a9.23 9.23 0 0 0-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 0 0-1.877-.726 10.496 10.496 0 0 0-1.564-.15c-.073-.005-.146-.01-.22-.015H6.117l-.283.02c-.62.04-1.237.1-1.84.27C2.77.507 1.803 1.181 1.12 2.328A4.971 4.971 0 0 0 .457 4.16c-.058.3-.09.605-.111.91L.33 5.3v13.44l.015.2c.04.615.09 1.23.272 1.83.317 1.04.9 1.893 1.783 2.53.585.422 1.24.69 1.947.843.37.078.745.12 1.122.147.206.015.413.022.62.03h12.042l.165-.012c.634-.04 1.265-.094 1.878-.285 1.07-.332 1.94-.946 2.583-1.86.394-.56.62-1.188.756-1.853.064-.308.1-.62.122-.934l.013-.198V6.124zm-7.16 4.994c0 2.467 0 4.934-.003 7.4 0 .272-.027.543-.08.81-.14.716-.52 1.272-1.13 1.665a2.61 2.61 0 0 1-1.09.433c-.508.084-1 .057-1.472-.135-.477-.194-.86-.51-1.1-.964-.37-.7-.214-1.628.39-2.2.36-.342.795-.544 1.277-.642.322-.065.65-.1.977-.147.32-.046.592-.184.77-.474.12-.197.164-.416.164-.647V10.95c0-.21-.058-.394-.26-.503a.862.862 0 0 0-.356-.1c-.638-.073-1.278-.135-1.917-.198-.705-.07-1.41-.14-2.116-.207-.238-.023-.447.07-.55.3-.058.13-.083.272-.083.417-.003 1.963-.004 3.925-.004 5.887 0 .806-.002 1.613-.004 2.42 0 .258-.023.514-.072.768-.143.73-.528 1.296-1.148 1.694-.41.264-.868.395-1.358.42-.406.02-.803-.02-1.18-.17-.568-.225-.98-.617-1.198-1.188-.284-.738-.088-1.43.507-1.968.363-.33.793-.522 1.266-.617.325-.065.655-.098.984-.146.313-.046.578-.178.754-.463.128-.205.17-.432.17-.666V8.46c0-.314.058-.605.32-.822.156-.13.34-.2.544-.22.755-.075 1.51-.146 2.264-.216l2.142-.206 1.503-.142c.16-.015.323-.022.483-.006.287.028.488.208.548.492.023.105.03.214.03.322v3.456z"/></svg>`;
+const APPLE_MUSIC_ICON = `<img src="./assets/apple-music.png" alt="Apple Music" width="24" height="24" style="border-radius: 4px;" />`;
 
-const SPOTIFY_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>`;
+const SPOTIFY_ICON = `<img src="./assets/spotify.png" alt="Spotify" width="24" height="24" style="border-radius: 50%;" />`;
 
 export function createDetailComponent(bus: EventBus, parser: MarkdownParser): DetailComponent {
   let container: HTMLElement | null = null;
@@ -106,10 +106,10 @@ export function createDetailComponent(bus: EventBus, parser: MarkdownParser): De
 
     let linksHtml = '';
     if (entry.appleMusicUrl) {
-      linksHtml += `<a href="${escapeAttr(entry.appleMusicUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Listen on Apple Music (opens in new tab)">${APPLE_MUSIC_SVG}</a>`;
+      linksHtml += `<a href="${escapeAttr(entry.appleMusicUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Listen on Apple Music (opens in new tab)">${APPLE_MUSIC_ICON}</a>`;
     }
     if (entry.spotifyUrl) {
-      linksHtml += `<a href="${escapeAttr(entry.spotifyUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Listen on Spotify (opens in new tab)">${SPOTIFY_SVG}</a>`;
+      linksHtml += `<a href="${escapeAttr(entry.spotifyUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Listen on Spotify (opens in new tab)">${SPOTIFY_ICON}</a>`;
     }
 
     const linksSection = linksHtml
@@ -132,32 +132,42 @@ export function createDetailComponent(bus: EventBus, parser: MarkdownParser): De
       ? currentIndex < currentCollection.entries.length - 1
       : false;
 
-    const prevButton = canGoPrev
-      ? `<button class="detail-nav-prev" aria-label="Previous song">\u2190</button>`
-      : '';
-    const nextButton = canGoNext
-      ? `<button class="detail-nav-next" aria-label="Next song">\u2192</button>`
-      : '';
+    const prevButton = `<button class="detail-nav-prev${canGoPrev ? '' : ' detail-nav--hidden'}" aria-label="Previous song"${canGoPrev ? '' : ' disabled'}>\u2190</button>`;
+    const nextButton = `<button class="detail-nav-next${canGoNext ? '' : ' detail-nav--hidden'}" aria-label="Next song"${canGoNext ? '' : ' disabled'}>\u2192</button>`;
 
     const backButton = isMobile
       ? `<button class="detail-back" aria-label="Back to timeline">\u2190 Back</button>`
       : '';
 
+    const albumCoverHtml = entry.albumCoverUrl
+      ? `<img class="detail-cover" src="${escapeAttr(entry.albumCoverUrl)}" alt="Album cover for ${escapeAttr(entry.song)}" />`
+      : '';
+
+    const musicVideoHtml = entry.musicVideoUrl
+      ? `<div class="detail-video"><iframe src="${escapeAttr(entry.musicVideoUrl.replace('youtu.be/', 'www.youtube.com/embed/').replace('watch?v=', 'embed/'))}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Music video for ${escapeAttr(entry.song)}"></iframe></div>`
+      : '';
+
     return `
       ${backButton}
-      <div class="detail-header">
-        <h2 class="detail-heading">${escapeHtml(heading)}</h2>
-        <div class="detail-secondary">
-          <span class="detail-album">${escapeHtml(entry.album)}</span>
-          <span class="detail-date">${escapeHtml(formattedDate)}</span>
-          ${linksSection}
+      <div class="detail-body">
+        <div class="detail-header">
+          <h2 class="detail-heading">${escapeHtml(heading)}</h2>
+          <div class="detail-secondary">
+            <span class="detail-album">${escapeHtml(entry.album)}</span>
+            <span class="detail-date">${escapeHtml(formattedDate)}</span>
+            ${linksSection}
+          </div>
         </div>
-      </div>
-      ${artistPhotoHtml}
-      ${notesHtml}
-      <div class="detail-nav">
-        ${prevButton}
-        ${nextButton}
+        <div class="detail-middle">
+          ${artistPhotoHtml}
+          ${notesHtml}
+        </div>
+        <div class="detail-cover-row">
+          ${prevButton}
+          ${albumCoverHtml}
+          ${nextButton}
+        </div>
+        ${musicVideoHtml}
       </div>
     `;
   }
@@ -188,10 +198,16 @@ export function createDetailComponent(bus: EventBus, parser: MarkdownParser): De
     const backBtn = overlayEl.querySelector('.detail-back');
 
     if (prevBtn) {
-      prevBtn.addEventListener('click', navigatePrev);
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigatePrev();
+      });
     }
     if (nextBtn) {
-      nextBtn.addEventListener('click', navigateNext);
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateNext();
+      });
     }
     if (backBtn) {
       backBtn.addEventListener('click', () => close());

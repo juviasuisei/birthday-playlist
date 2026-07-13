@@ -26,10 +26,6 @@ export function createTimelineComponent(bus: EventBus): TimelineComponent {
     el.className = `timeline timeline--${layoutMode}`;
     el.setAttribute('role', 'list');
 
-    const line = document.createElement('div');
-    line.className = 'timeline__line';
-    el.appendChild(line);
-
     const entries = document.createElement('div');
     entries.className = 'timeline__entries';
     el.appendChild(entries);
@@ -103,6 +99,12 @@ export function createTimelineComponent(bus: EventBus): TimelineComponent {
       const entryEl = createEntryElement(entry, index);
       entriesEl!.appendChild(entryEl);
     });
+
+    // Add trailing spacer so the last entry can scroll to center
+    const spacer = document.createElement('div');
+    spacer.className = 'timeline__spacer';
+    spacer.setAttribute('aria-hidden', 'true');
+    entriesEl.appendChild(spacer);
   }
 
   function handleDataLoaded(payload: { collection: SongCollection }): void {
@@ -145,10 +147,12 @@ export function createTimelineComponent(bus: EventBus): TimelineComponent {
       return Promise.resolve();
     }
 
-    targetEntry.scrollIntoView({
+    // padding-left on the scroll container = calc(50vw - 90px)
+    // This means scrollLeft=0 puts first entry at center.
+    // To center entry N, scroll to its offsetLeft within the entries container.
+    rootEl.scrollTo({
+      left: targetEntry.offsetLeft,
       behavior: 'smooth',
-      block: 'center',
-      inline: 'center',
     });
 
     return Promise.resolve();
