@@ -2,7 +2,7 @@
 
 ## Overview
 
-"Jeremiah's Birthday Playlist" is a single-page web application that fetches song data from Airtable and renders an interactive chronological timeline (1981–present). Each year maps to one song entry, displayed as an album cover on a horizontal (desktop) or vertical (mobile) timeline. Clicking an entry opens a detail view — a modal on desktop or fullscreen on mobile — with metadata, streaming links, and personal notes.
+"Birthday Playlist" is a single-page web application that fetches song data from Airtable and renders an interactive chronological timeline (1981–present). Each year maps to one song entry, displayed as an album cover on a horizontal (desktop) or vertical (mobile) timeline. Clicking an entry opens a detail view — a modal on desktop or fullscreen on mobile — with metadata, streaming links, and personal notes.
 
 The architecture follows a strict separation of concerns using vanilla TypeScript with pure DOM manipulation, an EventBus for inter-component communication, and Vite for the build pipeline.
 
