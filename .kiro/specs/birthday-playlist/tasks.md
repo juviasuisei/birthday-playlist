@@ -2,7 +2,7 @@
 
 ## Overview
 
-This plan implements "Jeremiah's Birthday Playlist" — a single-page web app that fetches song data from Airtable and renders an interactive chronological timeline (1981–present). The implementation follows a bottom-up approach: scaffolding → data layer → engine/utilities → rendering → controller → integration and wiring.
+This plan implements "Birthday Playlist" — a single-page web app that fetches song data from Airtable and renders an interactive chronological timeline (1981–present). The implementation follows a bottom-up approach: scaffolding → data layer → engine/utilities → rendering → controller → integration and wiring.
 
 ## Tasks
 
