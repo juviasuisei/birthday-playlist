@@ -2,7 +2,7 @@
 
 ## Introduction
 
-"Jeremiah's Birthday Playlist" is a personal music timeline web application that displays one song per year the user has been alive (1981 through the most recent year in the data). The tagline: "One song for every year I've been alive." The app fetches song data from Airtable at runtime and presents it as an interactive timeline with detail views for each song entry.
+"Birthday Playlist" is a personal music timeline web application that displays one song per year the user has been alive (1981 through the most recent year in the data). The tagline: "One song for every year I've been alive." The app fetches song data from Airtable at runtime and presents it as an interactive timeline with detail views for each song entry.
 
 ## Glossary
 
