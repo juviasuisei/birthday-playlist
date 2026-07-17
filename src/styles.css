@@ -196,7 +196,7 @@ button {
 .timeline--horizontal {
   overflow-x: scroll;
   overflow-y: hidden;
-  padding-left: calc(50vw - 90px);
+  padding-left: calc(50vw - clamp(90px, 10vh, 150px));
 }
 
 .timeline--horizontal .timeline__entries {
@@ -207,7 +207,7 @@ button {
 
 .timeline__spacer {
   flex-shrink: 0;
-  width: calc(50vw - 90px);
+  width: calc(50vw - clamp(90px, 10vh, 150px));
   min-height: 1px;
 }
 
@@ -331,10 +331,12 @@ button {
   background: var(--bg-modal);
   border-radius: 12px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-  position: relative;
-  height: calc(100vh - 80px);
-  max-height: calc(100vh - 80px);
   overflow: hidden;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: clamp(12px, 2vh, 20px);
+  padding: clamp(16px, 3vh, 28px);
+  max-height: calc(100vh - 100px);
 }
 
 .detail-content .detail-cover {
@@ -402,31 +404,18 @@ button {
   padding: 24px 20px;
 }
 
-/* Detail Header */
+/* Top section */
 .detail-top {
-  position: absolute;
-  top: clamp(16px, 3vh, 28px);
-  left: clamp(16px, 3vw, 28px);
-  right: clamp(16px, 3vw, 28px);
-  bottom: calc(50% + 70px);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .detail-bottom {
-  position: absolute;
-  top: calc(50% + 70px);
-  left: clamp(16px, 3vw, 28px);
-  right: clamp(16px, 3vw, 28px);
-  bottom: clamp(16px, 3vh, 28px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 12px;
+  min-height: 0;
 }
 
 .detail-header {
@@ -493,11 +482,10 @@ button {
 /* Notes / Thoughts */
 .detail-notes {
   margin: 0;
-  font-size: clamp(0.8rem, 1.5vh, 0.95rem);
+  font-size: clamp(0.7rem, 1.4vh, 1rem);
   line-height: 1.6;
   color: #ddd;
-  overflow-y: auto;
-  max-height: clamp(100px, 20vh, 200px);
+  overflow: hidden;
 }
 
 .detail-notes p {
@@ -528,16 +516,12 @@ button {
   margin-bottom: 4px;
 }
 
-/* Cover row with nav buttons on left/right — pinned to center */
+/* Cover row with nav buttons on left/right */
 .detail-cover-row {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: clamp(16px, 3vw, 24px);
-  z-index: 2;
 }
 
 .detail-cover-row .detail-nav-prev,
@@ -728,13 +712,48 @@ button {
 /* ----- Desktop covers sizing (768px+) ----- */
 @media (min-width: 768px) {
   .timeline__cover {
-    width: 180px;
-    height: 180px;
+    width: clamp(180px, 20vh, 300px);
+    height: clamp(180px, 20vh, 300px);
   }
 
   .timeline__cover-placeholder {
-    width: 180px !important;
-    height: 180px !important;
+    width: clamp(180px, 20vh, 300px) !important;
+    height: clamp(180px, 20vh, 300px) !important;
+  }
+}
+
+/* Large monitors (1200px+) */
+@media (min-width: 1200px) {
+  .detail-content .detail-body {
+    max-width: 900px;
+  }
+
+  .detail-content .detail-cover {
+    width: clamp(120px, 15vh, 200px);
+    height: clamp(120px, 15vh, 200px);
+  }
+
+  .detail-heading {
+    font-size: clamp(1.4rem, 3vh, 2rem);
+  }
+
+  .detail-secondary {
+    font-size: clamp(0.9rem, 1.8vh, 1.2rem);
+  }
+
+  .detail-artist-photo img {
+    max-height: clamp(200px, 25vh, 350px);
+  }
+
+  .detail-video {
+    max-width: 600px;
+  }
+
+  .detail-cover-row .detail-nav-prev,
+  .detail-cover-row .detail-nav-next {
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
   }
 }
 
