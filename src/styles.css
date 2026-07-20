@@ -693,6 +693,20 @@ button {
     height: calc(100vh - 100px);
     max-height: calc(100vh - 100px);
     border-radius: 12px;
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: clamp(8px, 1.5vh, 16px);
+    overflow: hidden;
+  }
+
+  .detail-top {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .detail-notes {
+    font-size: clamp(0.65rem, 1.8vw, 0.85rem);
+    overflow: hidden;
   }
 
   .detail-middle {
