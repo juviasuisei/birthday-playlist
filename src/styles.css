@@ -782,3 +782,41 @@ button {
 .timeline--vertical::-webkit-scrollbar {
   display: none;
 }
+
+/* ----- Site Footer ----- */
+.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  z-index: 10;
+  background: var(--bg-deep);
+}
+
+.site-footer .footer-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.site-footer a {
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.site-footer a:hover {
+  transform: scale(1.15);
+}
+
+.site-footer a img {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: var(--text-secondary);
+  padding: 4px;
+}
