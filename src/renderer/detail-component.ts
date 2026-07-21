@@ -219,6 +219,24 @@ export function createDetailComponent(bus: EventBus, parser: MarkdownParser): De
     }
   }
 
+  function fitNotesText(): void {
+    if (!overlayEl) return;
+    const notesEl = overlayEl.querySelector('.detail-notes') as HTMLElement | null;
+    if (!notesEl) return;
+
+    const topEl = overlayEl.querySelector('.detail-top') as HTMLElement | null;
+    if (!topEl) return;
+
+    // Start at current CSS size and shrink until top section doesn't overflow
+    let size = parseFloat(getComputedStyle(notesEl).fontSize);
+    const minSize = size * 0.55; // won't go below 55% of original
+
+    while (size > minSize && topEl.scrollHeight > topEl.clientHeight) {
+      size -= 0.5;
+      notesEl.style.fontSize = `${size}px`;
+    }
+  }
+
   function navigateNext(): void {
     if (!currentCollection || currentIndex >= currentCollection.entries.length - 1) return;
     bus.emit('nav:next', undefined);
@@ -262,6 +280,7 @@ export function createDetailComponent(bus: EventBus, parser: MarkdownParser): De
     const content = overlayEl.querySelector('.detail-content')!;
     content.innerHTML = renderContent(entry);
     attachNavListeners();
+    requestAnimationFrame(() => fitNotesText());
 
     if (!isOpen && isMobile) {
       window.history.pushState({ detailOpen: true }, '');

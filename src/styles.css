@@ -348,23 +348,26 @@ button {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-/* Middle row: artist photo left, thoughts right */
+/* Middle row: artist photo floated, thoughts wrap around */
 .detail-middle {
-  display: flex;
-  gap: clamp(12px, 2vw, 24px);
   margin: clamp(8px, 1.5vh, 16px) 0;
-  align-items: flex-start;
   width: 100%;
 }
 
 .detail-middle .detail-artist-photo {
-  flex-shrink: 0;
-  margin: 0;
+  float: left;
+  margin: 0 clamp(12px, 2vw, 20px) 8px 0;
+}
+
+.detail-middle .detail-artist-photo img {
+  max-height: clamp(120px, 20vh, 200px);
+  width: auto;
+  border-radius: 8px;
 }
 
 .detail-middle .detail-notes {
-  flex: 1;
   margin: 0;
+  display: contents; /* removes the wrapper so inner <p> tags flow around the float */
 }
 
 /* Music video embed */
@@ -470,7 +473,7 @@ button {
 
 /* Artist Photo */
 .detail-artist-photo {
-  margin: 20px 0;
+  margin: 0;
 }
 
 .detail-artist-photo img {
@@ -482,8 +485,8 @@ button {
 /* Notes / Thoughts */
 .detail-notes {
   margin: 0;
-  font-size: clamp(0.7rem, 1.4vh, 1rem);
-  line-height: 1.6;
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
+  line-height: 1.5;
   color: #ddd;
   overflow: hidden;
 }
@@ -704,18 +707,8 @@ button {
     min-height: 0;
   }
 
-  .detail-notes {
-    font-size: clamp(0.65rem, 1.8vw, 0.85rem);
-    overflow: hidden;
-  }
-
-  .detail-middle {
-    flex-direction: row;
-    gap: 16px;
-  }
-
   .detail-middle .detail-artist-photo img {
-    max-height: 120px;
+    max-height: 100px;
   }
 
   .detail-heading {
